@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slide Pics</title>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	
+<script>
+$(document).ready(function(){
+
+$.ajax({
+	url:'ImageData.json',
+	method:'GET',
+      
+	success:function(response){
+		for(i=0;i<response.data.length;i++)
+		{
+			var img = '<img class="myimg" height="150px" width="150px" src="'+response.data[i].image+'" fullImg="full_img'+i+'"/>';
+			$('#thumbImg').append(img );
+            var fullimg = '<img class="fullimg" style="display:none;" id="full_img'+i+'" height="500px" width="500px" src="'+response.data[i].image+'"/>';
+            $('#fullImg').append(fullimg);
+                        
+		}
+                
+                $(".myimg").bind("click", showfullImage);
+                
+	},
+	error:function (e){ alert('Something wrong Here ') ; console.log(e);}
+
+
+});
+
+
+});
+function showfullImage(){
+var imgFullPath = $(this).attr('fullImg');
+var $img = $('#'+imgFullPath);
+console.log($img);
+$('.fullimg').animate({width:'hide'});
+$img.animate({width:'show'});
+}
+
+</script>
+	
+</head>
+<body >
+
+<center><div id="thumbImg" style="background:black"></div></center>
+<center><div id="fullImg" style="float: left; width: 100%" ></div></center>
+</body>
+</html>
